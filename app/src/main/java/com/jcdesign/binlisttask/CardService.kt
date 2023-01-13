@@ -9,5 +9,5 @@ import retrofit2.http.Query
 interface CardService {
 
     @GET("{cardNumber}")
-    suspend fun getCards(@Path("cardNumber") cardNumber: String) : CardItem
+    suspend fun getCards(@Path("cardNumber") cardNumber: String) : Response<CardItem>
 }
