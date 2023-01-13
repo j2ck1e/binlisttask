@@ -3,32 +3,51 @@ package com.jcdesign.binlisttask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.liveData
-import retrofit2.Response
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var inputNumber: EditText
+    private lateinit var checkButton: Button
+    private lateinit var scheme: TextView
+    private lateinit var type: TextView
+    private lateinit var cardNumber: String
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val retService = RetrofitInstance
-            .getRetrofitInstance()
-            .create(CardService::class.java)
+        inputNumber = findViewById(R.id.cardNumber_editText)
+        checkButton = findViewById(R.id.check_btn)
+        scheme = findViewById(R.id.scheme_textview)
+        type = findViewById(R.id.type_textview)
 
-        val responceLiveData: LiveData<Response<Cards>> = liveData {
-            val responce: Response<Cards> = retService.getCards()
-            emit(responce)
-        }
-        responceLiveData.observe(this, Observer{
-            val cardsList = it.body()?.listIterator()
-            if(cardsList!=null) {
-                while (cardsList.hasNext()){
-                    val cardsItem = cardsList.next()
-                    Log.i("MYTAG", "${cardsItem}")
-                }
+
+
+
+        checkButton.setOnClickListener {
+            cardNumber = inputNumber.text.toString()
+
+
+            val retService = RetrofitInstance
+                .getRetrofitInstance()
+                .create(CardService::class.java)
+
+
+
+            GlobalScope.launch(Dispatchers.IO) {
+                val response = retService.getCards(cardNumber)
+                Log.i("MYTAG", "${response}")
+                scheme.text = response.scheme
+                type.text = response.type
             }
-        })
+        }
+
     }
 }

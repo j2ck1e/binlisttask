@@ -60,4 +60,6 @@ dependencies {
 //    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
     implementation "com.squareup.okhttp3:logging-interceptor:4.10.0"
+
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
 }
