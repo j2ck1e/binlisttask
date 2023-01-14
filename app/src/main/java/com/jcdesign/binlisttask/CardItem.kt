@@ -3,6 +3,7 @@ package com.jcdesign.binlisttask
 
 import com.google.gson.annotations.SerializedName
 
+
 data class CardItem(
     @SerializedName("bank")
     val bank: BankItem,
@@ -19,7 +20,6 @@ data class CardItem(
     @SerializedName("type")
     val type: String
 )
-
 
 data class BankItem(
     @SerializedName("city")
