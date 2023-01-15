@@ -62,9 +62,6 @@ class MainActivity : AppCompatActivity() {
 
 
 
-
-
-
         binding.checkBtn.setOnClickListener {
             if (binding.cardNumberEditText.text.length < 8) {
                 Toast.makeText(this, "Значение менее 8 символов", Toast.LENGTH_LONG).show()
@@ -85,16 +82,16 @@ class MainActivity : AppCompatActivity() {
                         if (response.isSuccessful) {
                             Log.i("MYTAG", "${response}")
 
-                            addItem(RecyclerItem(0, "scheme", "brand", 10, "type", false, "country", "sergei", "myWeb", "3062"))
-//                            binding.schemeTextview.text = "Scheme: " + response.body()?.scheme
-//                            binding.brandTextview.text = "Brand: " + response.body()?.brand
-//                            binding.lengthTextview.text = "Number length: " + response.body()?.number?.length
-//                            binding.typeTextview.text = "Type: " + response.body()?.type
-//                            binding.prepaidTextview.text = "Prepaid: " + response.body()?.prepaid
-//                            binding.countryTextview.text = "Country: " + response.body()?.country?.name
-//                            binding.nameTextview.text = "Bank: " + response.body()?.bank?.name
-//                            binding.siteTextview.text = response.body()?.bank?.url
-//                            binding.telTextview.text = "Tel.: " + response.body()?.bank?.phone
+                            addItem(RecyclerItem(0,
+                                "Scheme: " + response.body()?.scheme,
+                                "Brand: " + response.body()?.brand,
+                                "Number length: " + response.body()?.number?.length,
+                                "Type: " + response.body()?.type,
+                                "Prepaid: " + response.body()?.prepaid,
+                                "Country: " + response.body()?.country?.name,
+                                "Bank: " + response.body()?.bank?.name,
+                                response.body()?.bank?.url ?: "url isn't found",
+                                "Tel.: " + response.body()?.bank?.phone))
 
 
                         } else if (response.code() == 404) {
